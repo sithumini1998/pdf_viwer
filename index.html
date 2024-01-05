@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Viewer</title>
+</head>
+<body>
+    <input type="file" accept=".pdf,.doc,.docx" id="fileInput">
+    <button onclick="viewDocument()">View Document</button>
+
+    <script>
+        function viewDocument() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (file) {
+                if (file.type === 'application/pdf') {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const documentUrl = e.target.result;
+                        window.location.href = `viewer.html?file=${encodeURIComponent(documentUrl)}`;
+                    };
+
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('Please select a PDF file.');
+                }
+            } else {
+                alert('Please select a file.');
+            }
+        }
+    </script>
+</body>
+</html>
